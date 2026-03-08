@@ -1,65 +1,71 @@
 /*
-  페이지 기본 스타일
-  - 브라우저마다 기본 여백이 조금씩 다르므로 body에서 초기화합니다.
+  기본 페이지 스타일
+  - 화면 중앙 정렬
+  - 모바일에서도 깨지지 않도록 폭을 유연하게 처리
 */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #dbeafe, #eff6ff);
+  background: linear-gradient(135deg, #e0f2fe, #f8fafc);
   min-height: 100vh;
   display: grid;
   place-items: center;
-  color: #1e293b;
+  color: #0f172a;
 }
 
-/*
-  앱 카드
-  - 중앙에 보기 좋게 배치
-  - 초보자가 이해하기 쉬운 단순한 박스 형태
-*/
 .app {
-  width: min(90%, 420px);
+  width: min(94%, 560px);
   background: #ffffff;
   border-radius: 16px;
-  padding: 24px;
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+  padding: 20px;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
 }
 
 h1 {
-  margin-top: 0;
-  margin-bottom: 8px;
-  font-size: 1.6rem;
+  margin: 0 0 6px;
+  font-size: 1.5rem;
 }
 
 .subtitle {
-  margin-top: 0;
-  margin-bottom: 20px;
+  margin: 0 0 16px;
   color: #475569;
+  line-height: 1.45;
   font-size: 0.95rem;
 }
 
-/*
-  검색 UI 스타일
-*/
 .search-area {
   display: grid;
   gap: 8px;
-  margin-bottom: 14px;
 }
 
 label {
-  font-weight: 600;
+  font-weight: 700;
+}
+
+/*
+  자동완성 입력 래퍼
+  - dropdown이 input 바로 아래 오도록 기준 위치(relative)
+*/
+.autocomplete-wrapper {
+  position: relative;
 }
 
 input {
-  padding: 10px 12px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px 12px;
   border: 1px solid #cbd5e1;
   border-radius: 10px;
   font-size: 1rem;
 }
 
+input:focus {
+  outline: 2px solid #bfdbfe;
+  border-color: #3b82f6;
+}
+
 button {
-  padding: 10px 12px;
+  padding: 11px 12px;
   border: none;
   border-radius: 10px;
   background: #2563eb;
@@ -73,10 +79,48 @@ button:hover {
 }
 
 /*
-  에러 메시지
-  - 기본은 숨김 처리
-  - script.js에서 오류 시 display: block으로 바꿉니다.
+  자동완성 목록
+  - 기본은 숨김(display:none)
+  - JS에서 항목이 있을 때만 표시
 */
+.autocomplete-list {
+  display: none;
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  background: white;
+  max-height: 230px;
+  overflow-y: auto;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.15);
+  z-index: 20;
+}
+
+.autocomplete-item {
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+
+.autocomplete-item:hover,
+.autocomplete-item.active {
+  background: #eff6ff;
+}
+
+.status {
+  min-height: 20px;
+  margin: 10px 0 6px;
+  color: #1d4ed8;
+  font-size: 0.92rem;
+}
+
 .error {
   display: none;
   margin: 0 0 12px;
@@ -87,9 +131,6 @@ button:hover {
   padding: 10px;
 }
 
-/*
-  날씨 결과 카드
-*/
 .weather-card {
   background: #f8fafc;
   border: 1px solid #e2e8f0;
@@ -98,10 +139,47 @@ button:hover {
 }
 
 .weather-card h2 {
-  margin-top: 0;
-  font-size: 1.15rem;
+  margin: 0 0 12px;
+  font-size: 1.1rem;
 }
 
-.weather-card p {
-  margin: 8px 0;
+/*
+  날씨 정보를 2열 그리드로 표시
+  모바일에서는 1열로 자동 전환
+*/
+.weather-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.weather-grid p {
+  margin: 0;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.weather-grid strong {
+  font-size: 0.86rem;
+  color: #475569;
+}
+
+.weather-grid span {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+@media (max-width: 520px) {
+  .app {
+    padding: 16px;
+  }
+
+  .weather-grid {
+    grid-template-columns: 1fr;
+  }
 }
