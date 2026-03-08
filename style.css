@@ -1,0 +1,117 @@
+ (cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF' 
+diff --git a/style.css b/style.css
+new file mode 100644
+index 0000000000000000000000000000000000000000..19d360914dbd0600be6119752942f3a087e1b06b
+--- /dev/null
++++ b/style.css
+@@ -0,0 +1,107 @@
++/*
++  페이지 기본 스타일
++  - 브라우저마다 기본 여백이 조금씩 다르므로 body에서 초기화합니다.
++*/
++body {
++  margin: 0;
++  font-family: Arial, sans-serif;
++  background: linear-gradient(135deg, #dbeafe, #eff6ff);
++  min-height: 100vh;
++  display: grid;
++  place-items: center;
++  color: #1e293b;
++}
++
++/*
++  앱 카드
++  - 중앙에 보기 좋게 배치
++  - 초보자가 이해하기 쉬운 단순한 박스 형태
++*/
++.app {
++  width: min(90%, 420px);
++  background: #ffffff;
++  border-radius: 16px;
++  padding: 24px;
++  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
++}
++
++h1 {
++  margin-top: 0;
++  margin-bottom: 8px;
++  font-size: 1.6rem;
++}
++
++.subtitle {
++  margin-top: 0;
++  margin-bottom: 20px;
++  color: #475569;
++  font-size: 0.95rem;
++}
++
++/*
++  검색 UI 스타일
++*/
++.search-area {
++  display: grid;
++  gap: 8px;
++  margin-bottom: 14px;
++}
++
++label {
++  font-weight: 600;
++}
++
++input {
++  padding: 10px 12px;
++  border: 1px solid #cbd5e1;
++  border-radius: 10px;
++  font-size: 1rem;
++}
++
++button {
++  padding: 10px 12px;
++  border: none;
++  border-radius: 10px;
++  background: #2563eb;
++  color: white;
++  font-size: 1rem;
++  cursor: pointer;
++}
++
++button:hover {
++  background: #1d4ed8;
++}
++
++/*
++  에러 메시지
++  - 기본은 숨김 처리
++  - script.js에서 오류 시 display: block으로 바꿉니다.
++*/
++.error {
++  display: none;
++  margin: 0 0 12px;
++  color: #b91c1c;
++  background: #fee2e2;
++  border: 1px solid #fecaca;
++  border-radius: 8px;
++  padding: 10px;
++}
++
++/*
++  날씨 결과 카드
++*/
++.weather-card {
++  background: #f8fafc;
++  border: 1px solid #e2e8f0;
++  border-radius: 12px;
++  padding: 14px;
++}
++
++.weather-card h2 {
++  margin-top: 0;
++  font-size: 1.15rem;
++}
++
++.weather-card p {
++  margin: 8px 0;
++}
+ 
+EOF
+)
