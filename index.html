@@ -3,61 +3,74 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>초간단 날씨 앱</title>
-    <!--
-      style.css 파일을 연결합니다.
-      HTML(구조) / CSS(디자인) / JavaScript(동작)를 분리하는 연습을 위해
-      별도 파일로 나누어 작성합니다.
-    -->
+    <title>한국어 지역검색 날씨 앱</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <!--
-      앱 전체를 감싸는 카드 영역입니다.
-      초보자가 보기 쉽도록 모든 요소를 한 곳에 모았습니다.
-    -->
     <main class="app">
-      <h1>🌤️ 오늘의 날씨</h1>
-      <p class="subtitle">도시를 입력하고 현재 날씨를 확인해보세요.</p>
+      <h1>🌤️ 날씨 검색</h1>
+      <p class="subtitle">
+        한국어 지역명(예: 서울특별시, 강남구, 역삼동)도 검색할 수 있어요.
+      </p>
 
       <!--
-        검색 영역:
-        1) 도시명 입력
-        2) 검색 버튼
+        검색 컨트롤 전체 영역
+        - 입력창 + 자동완성 + 버튼을 한 그룹으로 묶습니다.
       -->
-      <section class="search-area" aria-label="도시 검색 영역">
-        <label for="cityInput">도시명</label>
-        <input
-          id="cityInput"
-          type="text"
-          placeholder="예: Seoul, Tokyo, London"
-        />
+      <section class="search-area" aria-label="지역 검색 영역">
+        <label for="cityInput">지역명</label>
+
+        <!--
+          입력창과 자동완성 드롭다운은 겹쳐서 보이도록 하나의 wrapper에 넣습니다.
+        -->
+        <div class="autocomplete-wrapper">
+          <input
+            id="cityInput"
+            type="text"
+            placeholder="예: 한국, 서울, 강남구, 역삼동"
+            autocomplete="off"
+            aria-autocomplete="list"
+            aria-controls="autocompleteList"
+            aria-expanded="false"
+          />
+
+          <!--
+            자동완성 목록
+            - 기본은 숨김 상태
+            - JavaScript가 항목을 동적으로 추가합니다.
+          -->
+          <ul id="autocompleteList" class="autocomplete-list" role="listbox"></ul>
+        </div>
+
         <button id="searchButton" type="button">검색</button>
       </section>
 
-      <!--
-        에러 메시지 영역:
-        - 도시를 찾지 못했거나 API 호출이 실패했을 때 메시지를 보여줍니다.
-        - 기본은 숨겨두고(script.js에서) 필요할 때만 표시합니다.
-      -->
+      <!-- 상태 안내 메시지: 검색 중, 안내 문구 등을 표시 -->
+      <p id="statusMessage" class="status" aria-live="polite"></p>
+
+      <!-- 에러 메시지: 사용자에게 실패 원인을 이해하기 쉽게 전달 -->
       <p id="errorMessage" class="error" role="alert"></p>
 
       <!--
-        날씨 결과 영역:
-        요구 기능
-        3) 현재 온도
-        4) 날씨 상태
-        5) 오늘 최고/최저 기온
+        결과 카드
+        - 지역명(상세 주소)
+        - 다양한 날씨 지표 표시
       -->
       <section id="weatherResult" class="weather-card" aria-live="polite">
-        <h2 id="cityName">도시를 검색해 주세요</h2>
-        <p><strong>현재 온도:</strong> <span id="currentTemp">-</span></p>
-        <p><strong>날씨 상태:</strong> <span id="weatherDescription">-</span></p>
-        <p><strong>최고 / 최저:</strong> <span id="maxMinTemp">-</span></p>
+        <h2 id="placeName">지역을 검색해 주세요</h2>
+
+        <div class="weather-grid">
+          <p><strong>현재 온도</strong><span id="currentTemp">-</span></p>
+          <p><strong>체감 온도</strong><span id="apparentTemp">-</span></p>
+          <p><strong>최고 / 최저</strong><span id="maxMinTemp">-</span></p>
+          <p><strong>날씨 상태</strong><span id="weatherDescription">-</span></p>
+          <p><strong>강수 (확률/량)</strong><span id="precipitation">-</span></p>
+          <p><strong>풍속</strong><span id="windSpeed">-</span></p>
+          <p><strong>습도</strong><span id="humidity">-</span></p>
+        </div>
       </section>
     </main>
 
-    <!-- JavaScript 파일 연결 -->
     <script src="script.js"></script>
   </body>
 </html>
